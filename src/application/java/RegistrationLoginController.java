@@ -185,7 +185,7 @@ public class RegistrationLoginController {
             loginPasswordPasswordField.setStyle(successStyle);
             invalidRegistrationCredentials.setText("");
 
-            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("../resources/UserInterface.fxml"));
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("../resources/UserDashboard.fxml"));
             root = loader1.load();
             
             UserInterfaceController userInterfaceController = loader1.getController();
