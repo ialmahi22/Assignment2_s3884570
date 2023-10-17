@@ -1,4 +1,4 @@
-package application.java;
+package SocialMediaHub.java;
 
 import java.awt.event.ActionEvent;
 //
@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class RegistrationLoginController {
 
     // Strings which hold css elements to easily re-use in the application
-    protected
+    protected static
     String successMessage = String.format("-fx-text-fill: GREEN;");
     String errorMessage = String.format("-fx-text-fill: RED;");
     String errorStyle = String.format("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
@@ -57,10 +57,10 @@ public class RegistrationLoginController {
     @FXML
     private TextField RegisterationConfirmPasswordField;
     
-    public static void verifyUsersLogin(String user, String password, String file, String type) throws FileNotFoundException
+    public static boolean[] verifyRegisterandLogin(String user, String password, String file, String type) throws FileNotFoundException
     {
-    	boolean usernameExists = false;
-    	boolean loginValid = false;
+    	boolean verifyLoginOutcome = false;
+    	boolean verifyRegistrationOutcome = false;
     	String tmpUser = "";
     	String tmpFirstName = "";
     	String tmpLastname = "";
@@ -69,7 +69,7 @@ public class RegistrationLoginController {
     		Scanner scan = new Scanner(new File(file));
     		scan.useDelimiter("[,\n]");
     		
-    		while(scan.hasNext() && !loginValid)
+    		while(scan.hasNext())
     		{
     			tmpUser = scan.next();
     			tmpFirstName = scan.next();
@@ -81,31 +81,21 @@ public class RegistrationLoginController {
     				
     				if(tmpUser.trim().equals(user.trim()))
     						{
-    							throw new IllegalArgumentException("The username" + user.trim() + " is taken, please choose different username");
-//    							usernameExists = true;	
-      						}
-    				
+    							verifyRegistrationOutcome = false;;
+      						}    				
     			    }
     			else if(type.equals("login") && tmpUser.trim().equals(user.trim()) && tmpPassword.trim().equals(password.trim()))
     					{
-    						loginValid = true;
+    				verifyLoginOutcome = true;
+
     					}   			
     		
     		}
     		scan.close();
     		
-    		if(type.equals("login") && !loginValid)
-    		{
-    			throw new IllegalArgumentException("Invalid username or password");
-    		}    		
+
+    		return new boolean[] { verifyLoginOutcome, verifyRegistrationOutcome };
     	}
-//    	catch(IllegalArgumentException e)
-//    	{
-//    		throw new IndexOutOfBoundsException("Invalid information provided");
-//    	}    	
-    
-
-
 
     // Creation of methods which are activated on events in the forms
     @FXML
@@ -132,27 +122,41 @@ public class RegistrationLoginController {
             }
         } else if (RegisterationConfirmPasswordField.getText().equals(RegisterationPasswordField.getText())) {
         	// verify whether the same usename exists
-        	String filename = ("src/application/files/users.txt");
+        	String filename = ("src/SocialMediaHub/files/users.txt");
 
-        	verifyUsersLogin(RegisterationUsernameField.getText().toString(),RegisterationPasswordField.getText().toString(), filename, "registration");
-        	// store the users information
-        	StringBuilder build = new StringBuilder();
-        	build.append(RegisterationUsernameField.getText().toString() + "," + RegisterationFirstNameField.getText().toString() + 
-        			"," + RegisterationLastNameField.getText().toString() + "," + RegisterationPasswordField.getText().toString() + "\r\n");
-        	//File credentials = new File("src/application/files/users.txt");
-        	File credentials = new File(filename);
-        	FileWriter fw = new FileWriter(credentials, true);
-        	BufferedWriter br = new BufferedWriter(fw);
-        	br.write(build.toString());
-        	br.close();
-        	fw.close();
-        	
-            invalidRegistrationCredentials.setText("Registration completed successfully!");
-            invalidRegistrationCredentials.setStyle(successMessage);
-            RegisterationUsernameField.setStyle(successStyle);
-            RegisterationPasswordField.setStyle(successStyle);
-            RegisterationConfirmPasswordField.setStyle(successStyle);
-            invalidLoginCredentials.setText("");
+        	boolean[] registerOutcome  = verifyRegisterandLogin(RegisterationUsernameField.getText().toString(),RegisterationPasswordField.getText().toString(), filename, "registration") ;
+        	// check the registration verification results, second returned boolen is false
+        	if(!registerOutcome[1]) {              
+	        	// The verification is successful, store the users information in the users file
+	        	StringBuilder build = new StringBuilder();
+	        	build.append(RegisterationUsernameField.getText().toString() + "," + RegisterationFirstNameField.getText().toString() + 
+	        			"," + RegisterationLastNameField.getText().toString() + "," + RegisterationPasswordField.getText().toString() + "\r\n");
+	
+	        	File credentials = new File(filename);
+	        	FileWriter fw = new FileWriter(credentials, true);
+	        	BufferedWriter br = new BufferedWriter(fw);
+	        	br.write(build.toString());
+	        	br.close();
+	        	fw.close();
+	        	
+	        	// display success registration message in the user's GUI
+	            invalidRegistrationCredentials.setText("Registration completed successfully!");
+	            invalidRegistrationCredentials.setStyle(successMessage);
+	            RegisterationUsernameField.setStyle(successStyle);
+	            RegisterationPasswordField.setStyle(successStyle);
+	            RegisterationConfirmPasswordField.setStyle(successStyle);
+	            invalidLoginCredentials.setText("");
+        	}
+        	else {
+	        	// The username provided is taken by previous registered users, display the failure message
+	            invalidRegistrationCredentials.setText("Username is take, please choose different username");
+	            invalidRegistrationCredentials.setStyle(errorStyle);
+	            RegisterationUsernameField.setStyle(errorStyle);
+	            RegisterationPasswordField.setStyle(errorStyle);
+	            RegisterationConfirmPasswordField.setStyle(errorStyle);
+	            invalidLoginCredentials.setText("");
+        	}
+	            
         } else {
             invalidRegistrationCredentials.setText("The Passwords don't match!");
             invalidRegistrationCredentials.setStyle(errorMessage);
@@ -175,28 +179,41 @@ public class RegistrationLoginController {
                 loginPasswordPasswordField.setStyle(errorStyle);
             }
         } else {
-        	String filename = ("src/application/files/users.txt");
+        	String filename = ("src/SocialMediaHub/files/users.txt");
 
-        	verifyUsersLogin(loginUsernameTextField.getText().toString(),loginPasswordPasswordField.getText().toString(), filename, "login");
+        	boolean[] loginOutcome = verifyRegisterandLogin(loginUsernameTextField.getText().toString(),loginPasswordPasswordField.getText().toString(), filename, "login");
         	
-            invalidLoginCredentials.setText("Login Successful!");
-            invalidLoginCredentials.setStyle(successMessage);
-            loginUsernameTextField.setStyle(successStyle);
-            loginPasswordPasswordField.setStyle(successStyle);
-            invalidRegistrationCredentials.setText("");
+        	// check the login verification results, first returned boolen
+        	if(loginOutcome[0]) {
+        		// display success registration message in the user's GUI
+                invalidLoginCredentials.setText("Login Successful!");
+                invalidLoginCredentials.setStyle(successMessage);
+                loginUsernameTextField.setStyle(successStyle);
+                loginPasswordPasswordField.setStyle(successStyle);
+                invalidRegistrationCredentials.setText("");
 
-            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("../resources/UserDashboard.fxml"));
-            root = loader1.load();
-            
-            UserInterfaceController userInterfaceController = loader1.getController();
-            userInterfaceController.setUsernameLabel(loginUsernameTextField.getText().toString());
+                FXMLLoader loader1 = new FXMLLoader(getClass().getResource("../resources/UserDashboard.fxml"));
+                root = loader1.load();
+                
+                UserInterfaceController userInterfaceController = loader1.getController();
+                userInterfaceController.setUsernameLabel(loginUsernameTextField.getText().toString());
 
-            Stage stage = (Stage) LoginButton.getScene().getWindow();
-            
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-    
+                Stage stage = (Stage) LoginButton.getScene().getWindow();
+                
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();               		
+        	}
+        	
+        	else {
+                invalidLoginCredentials.setText("Invalid username or password!");
+                invalidLoginCredentials.setStyle(errorMessage);
+                loginUsernameTextField.setStyle(errorStyle);
+                loginPasswordPasswordField.setStyle(errorStyle);
+                invalidRegistrationCredentials.setText("");
+        	}
+        	
+
 
 
         }

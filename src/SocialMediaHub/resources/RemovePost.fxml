@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SocialMediaHub.java.UserInterfaceController">
+   <children>
+      <Label layoutX="157.0" layoutY="45.0" prefHeight="26.0" prefWidth="277.0" text="Please enter the post to be removed">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="164.0" layoutY="131.0" prefHeight="26.0" prefWidth="54.0" text="Post ID">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="removePostID" layoutX="308.0" layoutY="131.0" prefHeight="25.0" prefWidth="100.0" />
+      <Label fx:id="invalidPostID" layoutX="108.0" layoutY="245.0" prefHeight="17.0" prefWidth="375.0" />
+      <Button fx:id="RemovePostSubmit" layoutX="269.0" layoutY="276.0" mnemonicParsing="false" onAction="#onRemovePostSubmit" text="Submit" />
+      <Button fx:id="BackButton" layoutX="516.0" layoutY="45.0" mnemonicParsing="false" onAction="#onBackButton" text="Back" />
+   </children>
+</AnchorPane>
