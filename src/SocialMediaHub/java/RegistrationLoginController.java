@@ -1,7 +1,5 @@
 package SocialMediaHub.java;
 
-import java.awt.event.ActionEvent;
-//
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,7 +27,6 @@ public class RegistrationLoginController {
     String successStyle = String.format("-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;");
 
     
-    private Stage stage;
     private Scene scene;
     private Parent root;    
 
@@ -62,9 +59,10 @@ public class RegistrationLoginController {
     	boolean verifyLoginOutcome = false;
     	boolean verifyRegistrationOutcome = false;
     	String tmpUser = "";
-    	String tmpFirstName = "";
-    	String tmpLastname = "";
+
     	String tmpPassword = "";
+    	String tmpVIPUser = "";
+    	boolean VIPUser = false;
 
     		Scanner scan = new Scanner(new File(file));
     		scan.useDelimiter("[,\n]");
@@ -72,29 +70,34 @@ public class RegistrationLoginController {
     		while(scan.hasNext())
     		{
     			tmpUser = scan.next();
-    			tmpFirstName = scan.next();
-    			tmpLastname = scan.next();
+    			String tmpFirstName = scan.next();
+    			String tmpLastname = scan.next();
     			tmpPassword = scan.next();
+    			tmpVIPUser = scan.next();
     			
     			if(type.equals("registration"))
     				{
     				
     				if(tmpUser.trim().equals(user.trim()))
+    					// the username is taken and the user needs to provide another username
     						{
     							verifyRegistrationOutcome = false;;
       						}    				
     			    }
-    			else if(type.equals("login") && tmpUser.trim().equals(user.trim()) && tmpPassword.trim().equals(password.trim()))
-    					{
+    			else if(type.equals("login") && tmpUser.trim().equals(user.trim()) && tmpPassword.trim().equals(password.trim())) {
+    				// The user is verified and can login successfully
     				verifyLoginOutcome = true;
-
-    					}   			
+    				// Check if the user is normal or VIP user
+    				if(tmpVIPUser.trim().equals("YES")) {
+    					VIPUser = true;
+    				}
+    				}   			
     		
     		}
     		scan.close();
     		
 
-    		return new boolean[] { verifyLoginOutcome, verifyRegistrationOutcome };
+    		return new boolean[] { verifyLoginOutcome, verifyRegistrationOutcome, VIPUser };
     	}
 
     // Creation of methods which are activated on events in the forms
@@ -128,9 +131,10 @@ public class RegistrationLoginController {
         	// check the registration verification results, second returned boolen is false
         	if(!registerOutcome[1]) {              
 	        	// The verification is successful, store the users information in the users file
+        		// the user is registered as normal user (non-vip user)
 	        	StringBuilder build = new StringBuilder();
 	        	build.append(RegisterationUsernameField.getText().toString() + "," + RegisterationFirstNameField.getText().toString() + 
-	        			"," + RegisterationLastNameField.getText().toString() + "," + RegisterationPasswordField.getText().toString() + "\r\n");
+	        			"," + RegisterationLastNameField.getText().toString() + "," + RegisterationPasswordField.getText().toString() + "," + "NO" + "\r\n");
 	
 	        	File credentials = new File(filename);
 	        	FileWriter fw = new FileWriter(credentials, true);
@@ -185,18 +189,38 @@ public class RegistrationLoginController {
         	
         	// check the login verification results, first returned boolen
         	if(loginOutcome[0]) {
-        		// display success registration message in the user's GUI
+        		// display success login message in the user's GUI
                 invalidLoginCredentials.setText("Login Successful!");
                 invalidLoginCredentials.setStyle(successMessage);
                 loginUsernameTextField.setStyle(successStyle);
                 loginPasswordPasswordField.setStyle(successStyle);
                 invalidRegistrationCredentials.setText("");
-
-                FXMLLoader loader1 = new FXMLLoader(getClass().getResource("../resources/UserDashboard.fxml"));
-                root = loader1.load();
                 
-                UserInterfaceController userInterfaceController = loader1.getController();
-                userInterfaceController.setUsernameLabel(loginUsernameTextField.getText().toString());
+//                CommonDashboardController commonDashboardController = new CommonDashboardController(loginUsernameTextField.getText().toString());
+//				CommonDashboardController commonDashboardController = new CommonDashboardController();
+//				// Set the loggedon user variable
+//                commonDashboardController.setUsernameLabel(loginUsernameTextField.getText().toString());    
+
+                
+                // If the user is VIP, load the VIP dashboard
+                if(loginOutcome[2]) {
+					
+                    FXMLLoader loader1 = new FXMLLoader(getClass().getResource("../resources/VIPUserDashboard.fxml"));
+                    root = loader1.load();
+                    
+                    VIPUserDashboardController vipUserController = loader1.getController();
+                    vipUserController.setUser(loginUsernameTextField.getText().toString()) ;
+
+                }
+                // Else, load the normal user dashboard
+                else {
+                    FXMLLoader loader1 = new FXMLLoader(getClass().getResource("../resources/NormalUserDashboard.fxml"));
+                    root = loader1.load();
+                    NormalUserDashboardController normalUserController = loader1.getController();
+                    normalUserController.setUser(loginUsernameTextField.getText().toString()) ;               
+                      
+                }                
+
 
                 Stage stage = (Stage) LoginButton.getScene().getWindow();
                 
@@ -218,5 +242,7 @@ public class RegistrationLoginController {
 
         }
 
-    }    	 
+    }
+
+	 
 }

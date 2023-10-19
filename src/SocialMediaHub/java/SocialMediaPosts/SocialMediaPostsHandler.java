@@ -2,17 +2,12 @@
 package SocialMediaHub.java.SocialMediaPosts;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class SocialMediaPostsHandler implements postsFileProcessor {
-//	static socialMedia smPost  = new socialMedia();
-//	static ArrayList<Post> postsCollection = smPost.getPosts();
-
 	
 	// method to process the integer input fields and handles the exception
 	public static void handleNumericInput(String message, int var, Scanner scan){
@@ -115,77 +110,6 @@ public class SocialMediaPostsHandler implements postsFileProcessor {
 
 		return returnedTopSharedPosts;
 	  }	
-//		
-//		else if(choice == 2)
-//		{
-//			System.out.println("Please provide the post ID:");
-//			int postIDInput = scan.nextInt();	
-//			scan.close();
-//	        // create list to check whether the new post ID exists in the collection
-//		    ArrayList<Integer> postExists = new ArrayList<Integer>();
-//		    
-//		    for (Post post: postsCollection) {
-//		    	
-//		    	// remove the post if the post ID exists in the collection
-//			      if(post.getPostID() == postIDInput) {
-//			    	  postExists.add(postIDInput);
-//			    	  smPost.removePost(post);	
-//			    	  System.out.println("The post has been deleted successfully!");
-//			    	  break;
-//				      }        
-//		    }
-//			if(!postExists.contains(postIDInput)) {
-//				throw new IllegalArgumentException("Sorry the post does not exist in the collection!");  
-//			}
-//	   }
-//		else if(choice == 3)
-//		{
-//			System.out.println("Please provide the post ID:");
-//			int postIDInput = scan.nextInt();		
-//			scan.close();
-//	        // create list to check whether the new post ID exists in the collection
-//		    ArrayList<Integer> postExists = new ArrayList<Integer>();
-//		    
-//		    for (Post post: postsCollection) {
-//		    	
-//		    	// remove the post if the post ID exists in the collection
-//			      if(post.getPostID() == postIDInput) {
-//			    	  postExists.add(postIDInput);
-//			    	  System.out.println("Please find below the retrieved post details!");		    	  
-//			    	  System.out.println(post.getPostInfo());
-//			    	  break;
-//				      }        
-//		    }
-//			if(!postExists.contains(postIDInput)) {
-//				throw new IllegalArgumentException("Sorry the post does not exist in the collection!");  
-//			    }
-//		}	
-//		   // Retrieve the top N posts with most likes
-//			else if(choice == 4)
-//			{				
-//				// invoke getTopValues method to scan the top N posts input and get the top likes				
-//				getTopNvalues("like", scan);			
-//			}	
-//				
-//	    	// Retrieve the top N posts with  most shares
-//			else if(choice == 5)
-//			{
-//				// invoke getTopValues method to scan the top N posts input and get the top shares
-//				getTopNvalues("share", scan);
-//			}	
-//		
-//			else if(choice == 6)
-//			{
-//				System.out.println("Thanks for using Social Media Analyzer!");
-//			}	
-//	
-//			else			
-//			{
-//				scan.close();
-//		        throw new IllegalArgumentException("You entered an invalid choice, please choose an option from 1 to 6");
-//			}		
-//		}
-	
 	}	
 interface postsFileProcessor {
 	static String filename = ("src/SocialMediaHub/files/posts.csv");
@@ -274,8 +198,8 @@ interface postsFileProcessor {
     		Scanner scan = new Scanner(new File(filename));
     		scan.useDelimiter("[,\n]");
     		
-    		// skip the header
-    		String skip =  scan.nextLine();
+    		// skip the header line
+    		scan.nextLine();
     		
     		while(scan.hasNext())
     		{
@@ -357,7 +281,6 @@ interface postsFileProcessor {
 		    // Add the top N posts in a new MAP to be returned to the JavaFx methods
 			if(topN < postLinkedHashmap.size())
 			{
-//				System.out.println("Please find the top " +  top + " " + type + "d posts in the collection");
 				int index = 0;
 		        for (Map.Entry<String, Integer> set : postLinkedHashmap.entrySet()) 
 		        {
@@ -370,7 +293,6 @@ interface postsFileProcessor {
 		    }
 			else {
 				// Since the requested number of posts is more that the number in the collection, will print all of them
-//				System.out.println("Only " +  sortedHashMap.size() + " posts exist in the collection. Showing all of them.");
 				for (Map.Entry<String, Integer> set : postLinkedHashmap.entrySet())
 				{
 			    	returnedTopPosts.put(set.getKey() , set.getValue());			

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SocialMediaHub.java.UserInterfaceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <Label layoutX="179.0" layoutY="45.0" prefHeight="26.0" prefWidth="264.0" text="Please Enter the Post Information">
          <font>
@@ -26,32 +26,25 @@
          </font>
       </Label>          
       <TextField fx:id="postContent" layoutX="312.0" layoutY="116.0" prefHeight="25.0" prefWidth="100.0" />
-      <Label layoutX="169.0" layoutY="147.0" prefHeight="26.0" prefWidth="100.0" text="Post Author">
+      <Label layoutX="171.0" layoutY="147.0" prefHeight="26.0" prefWidth="131.0" text="Number of Likes">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="postAuthor" layoutX="312.0" layoutY="147.0" prefHeight="25.0" prefWidth="100.0" />
-      <Label layoutX="171.0" layoutY="180.0" prefHeight="26.0" prefWidth="131.0" text="Number of Likes">
+      <TextField fx:id="postLikes" layoutX="313.0" layoutY="147.0" prefHeight="25.0" prefWidth="100.0" />
+      <Label layoutX="171.0" layoutY="175.0" prefHeight="26.0" prefWidth="147.0" text="Number of Shares">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="postLikes" layoutX="313.0" layoutY="180.0" prefHeight="25.0" prefWidth="100.0" />
-      <Label layoutX="171.0" layoutY="208.0" prefHeight="26.0" prefWidth="147.0" text="Number of Shares">
+      <TextField fx:id="postShares" layoutX="313.0" layoutY="177.0" prefHeight="25.0" prefWidth="100.0" />
+      <Label layoutX="171.0" layoutY="206.0" prefHeight="26.0" prefWidth="100.0" text="Post Date">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="postShares" layoutX="312.0" layoutY="210.0" prefHeight="25.0" prefWidth="100.0" />
-      <Label layoutX="171.0" layoutY="239.0" prefHeight="26.0" prefWidth="100.0" text="Post Date">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <DatePicker fx:id="postDate" layoutX="289.0" layoutY="239.0" prefWidth="175.0" />
+      <DatePicker fx:id="postDate" layoutX="289.0" layoutY="206.0" prefWidth="175.0" />
       <Label fx:id="invalidPostInput" layoutX="112.0" layoutY="280.0" prefHeight="17.0" prefWidth="375.0" />
-      <Button fx:id="AddPostSubmit" layoutX="259.0" layoutY="350.0" mnemonicParsing="false" onAction="#onAddPostSubmit" text="Submit" />
-      <Button fx:id="BackButton" layoutX="516.0" layoutY="45.0" mnemonicParsing="false" onAction="#onBackButton" text="Back" />
+      <Button fx:id="AddPostSubmit" layoutX="273.0" layoutY="297.0" mnemonicParsing="false" onAction="#onAddPostSubmit" text="Submit" />
    </children>
 </AnchorPane>

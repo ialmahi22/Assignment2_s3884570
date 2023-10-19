@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SocialMediaHub.java.UserInterfaceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <Label layoutX="157.0" layoutY="45.0" prefHeight="26.0" prefWidth="277.0" text="Please enter the post to be removed">
          <font>
@@ -21,6 +21,5 @@
       <TextField fx:id="removePostID" layoutX="308.0" layoutY="131.0" prefHeight="25.0" prefWidth="100.0" />
       <Label fx:id="invalidPostID" layoutX="108.0" layoutY="245.0" prefHeight="17.0" prefWidth="375.0" />
       <Button fx:id="RemovePostSubmit" layoutX="269.0" layoutY="276.0" mnemonicParsing="false" onAction="#onRemovePostSubmit" text="Submit" />
-      <Button fx:id="BackButton" layoutX="516.0" layoutY="45.0" mnemonicParsing="false" onAction="#onBackButton" text="Back" />
    </children>
 </AnchorPane>

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SocialMediaHub.java.UserInterfaceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <Label layoutX="157.0" layoutY="45.0" prefHeight="26.0" prefWidth="277.0" text="Please enter the post to be retrieved">
          <font>
@@ -22,6 +22,5 @@
       <Label fx:id="invalidPostID" layoutX="118.0" layoutY="226.0" prefHeight="17.0" prefWidth="375.0" />
       <Label fx:id="retrievedPost" layoutX="118.0" layoutY="255.0" prefHeight="49.0" prefWidth="375.0" />
       <Button fx:id="RetrievePostSubmit" layoutX="269.0" layoutY="350.0" mnemonicParsing="false" onAction="#onRetrievePostSubmit" text="Submit" />
-      <Button fx:id="BackButton" layoutX="516.0" layoutY="45.0" mnemonicParsing="false" onAction="#onBackButton" text="Back" />
    </children>
 </AnchorPane>

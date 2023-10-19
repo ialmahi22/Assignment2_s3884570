@@ -6,8 +6,6 @@ public class TopNPosts {
 
     public TopNPosts(String postContent, int numberOfInteractionsr) {
         this.postContent = postContent;
-        this.numberOfInteractions = numberOfInteractions;
-
     }
 
 

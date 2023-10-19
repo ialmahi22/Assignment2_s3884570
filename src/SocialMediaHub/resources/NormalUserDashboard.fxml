@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SocialMediaHub.java.NormalUserDashboardController">
+   <children>
+      <AnchorPane prefHeight="461.0" prefWidth="596.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <AnchorPane prefHeight="397.0" prefWidth="181.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane prefHeight="397.0" prefWidth="225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-25.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label layoutX="39.0" layoutY="52.0" text="Welcome, ">
+                                 <font>
+                                    <Font name="Tahoma" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="welcomUsername" layoutX="112.0" layoutY="50.0" text="Username">
+                                 <font>
+                                    <Font name="Arial Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="26.333343505859375" endY="159.29287719726562" layoutX="-3.0" layoutY="-84.0" startX="216.33331298828125" startY="159.29287719726562" />
+                              <Button fx:id="UpdateUserInfo" layoutX="12.0" layoutY="131.0" mnemonicParsing="false" onAction="#onUpdateUserInfo" prefHeight="35.0" prefWidth="206.0" text="Update Information" textFill="#5c5ebc">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="AddPost" layoutX="11.0" layoutY="173.0" mnemonicParsing="false" onAction="#onAddPost" prefHeight="35.0" prefWidth="207.0" text="Add Social Media Post" textFill="#5c5ebc">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="RemovePost" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" onAction="#onRemovePost" prefHeight="35.0" prefWidth="209.0" text="Remove Social Media Post" textFill="#5c5ebc">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="RetrievePost" layoutX="10.0" layoutY="257.0" mnemonicParsing="false" onAction="#onRetrievePost" prefHeight="35.0" prefWidth="208.0" text="Retrieve Social Media Post" textFill="#5c5ebc">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="TopNLikedPosts" layoutX="10.0" layoutY="299.0" mnemonicParsing="false" onAction="#onTopNLikedPosts" prefHeight="35.0" prefWidth="207.0" text="Retrieve TOP N liked Posts" textFill="#5c5ebc">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="TopNSharedPosts" layoutX="10.0" layoutY="341.0" mnemonicParsing="false" onAction="#onTopNSharedPosts" prefHeight="35.0" prefWidth="209.0" text="Retrieve TOP N Shared Posts" textFill="#5c5ebc">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font></Button>
+                              <Button fx:id="VIPOptIn" layoutX="13.0" layoutY="88.0" mnemonicParsing="false" onAction="#onVIPOptIn" prefHeight="35.0" prefWidth="206.0" text="Unclock VIP Features" textFill="#409856">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </top>
+            </BorderPane>
+            <Label layoutX="212.0" layoutY="13.0" prefHeight="33.0" prefWidth="232.0" text="Social Media Hub" textFill="#5665ba">
+               <font>
+                  <Font name="Tahoma Bold" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
