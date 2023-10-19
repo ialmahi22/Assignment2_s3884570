@@ -1,3 +1,21 @@
+/*
+
+ * NormalUserDashboardController class
+ * Contains the javafx methods to load the normal user dashboards and enable the functionalities for the normal users, options provided:
+ * 1. Upgrade to become VIP user
+ * 2. Update the user's profile information
+ * 3. Add social media post
+ * 4. Remove social media post
+ * 5. Retrieve social media post
+ * 6. Retrieve top N liked or shared posts
+ * 
+ * 
+ * Version: v1.0
+ *
+ * Date: 20 Oct 2023
+ * 
+ * Copyright to RMIT, Oct 2023
+ */
 package SocialMediaHub.java;
 
 import java.io.BufferedWriter;
@@ -8,10 +26,10 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
 
 import SocialMediaHub.java.SocialMediaPosts.SocialMediaPostsHandler;
 import javafx.collections.ObservableList;
-//SocialMediaPostsHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

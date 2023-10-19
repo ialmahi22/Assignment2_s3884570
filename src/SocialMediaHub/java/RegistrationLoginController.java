@@ -1,3 +1,19 @@
+/*
+
+ * RegistrationLoginController class:
+ * Contains the javafx methods to provide below capabilities:
+ * 1. Registration of a new user
+ * 2. Users' login management
+ * 3. Display the users' dashboard according to the user's type (VIP or normal user)
+ * 
+ * 
+ * Version: v1.0
+ *
+ * Date: 20 Oct 2023
+ * 
+ * Copyright to RMIT, Oct 2023
+ */
+
 package SocialMediaHub.java;
 
 import java.io.BufferedWriter;
