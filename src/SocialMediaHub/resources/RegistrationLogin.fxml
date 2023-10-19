@@ -53,7 +53,7 @@
                         <Insets />
                     </opaqueInsets>
                 </Label>
-                <Button fx:id="LoginButton" layoutX="335.0" layoutY="195.0" mnemonicParsing="false" onAction="#onLoginButton" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Login">
+                <Button fx:id="LoginButton" layoutX="264.0" layoutY="192.0" mnemonicParsing="false" onAction="#onLoginButton" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Login">
                     <font>
                         <Font size="15.0" />
                     </font>
@@ -109,7 +109,7 @@
                         <Insets />
                     </opaqueInsets>
                 </Label>
-                <Button fx:id="Register" layoutX="230.0" layoutY="615.0" mnemonicParsing="false" onAction="#onRegisterButton" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Register">
+                <Button fx:id="Register" layoutX="224.0" layoutY="544.0" mnemonicParsing="false" onAction="#onRegisterButton" prefHeight="33.0" prefWidth="130.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Register">
                     <font>
                         <Font size="15.0" />
                     </font>
