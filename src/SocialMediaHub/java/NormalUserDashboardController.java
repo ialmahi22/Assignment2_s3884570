@@ -45,6 +45,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/* Interface containing methods to update the user's information */
 interface updateUserInformation {
     static void vipOptIn(String username) {
     	String filename = ("src/SocialMediaHub/files/users.txt");
@@ -287,7 +288,7 @@ interface updateUserInformation {
 }
 
 public class NormalUserDashboardController implements updateUserInformation{
-	// Create an instance of the social media handler
+	/* Create an instance of the social media handler */
 	SocialMediaPostsHandler smHandler  = new SocialMediaPostsHandler();
 
     private Scene scene;
@@ -298,7 +299,7 @@ public class NormalUserDashboardController implements updateUserInformation{
     String errorStyle = String.format("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
     String successStyle = String.format("-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;");
     
-    // FXML declarations for the user dashboard
+    /* FXML declarations for the user dashboard */
     @FXML
     private Label welcomUsername;   
     @FXML
@@ -311,13 +312,13 @@ public class NormalUserDashboardController implements updateUserInformation{
     private Button AddPost;    
     @FXML
     private Button RemovePost;  
-    // VIP subscription button
+    /* VIP subscription button */
     @FXML
     private Button VIPSubscribe;
     @FXML
     private Label vipSubscriberMessage;
     
-    // Update user information
+    /* Update user information */
     @FXML
     private Button UpdateSubmit;   
     @FXML
@@ -336,7 +337,7 @@ public class NormalUserDashboardController implements updateUserInformation{
     private TextField updatePassword;
     @FXML
     private Label invalidUpdateInfo;
-    // posts addition/retrieval/deletion fields
+    /* posts addition/retrieval/deletion fields */
     @FXML
     private Button AddPostSubmit;    
     @FXML
@@ -354,7 +355,7 @@ public class NormalUserDashboardController implements updateUserInformation{
     @FXML
     private Label invalidPostInput; 
     
-    // post removal fxml gui
+    /* post removal fxml gui */
     @FXML
     private Button RemovePostSubmit;
     @FXML
@@ -362,7 +363,7 @@ public class NormalUserDashboardController implements updateUserInformation{
     @FXML
     private Label invalidPostID; // shared with retrieve a post
     
-    // Retrieve a post
+    /* Retrieve a post */
     @FXML
     private Button RetrievePost;
     @FXML
@@ -372,7 +373,7 @@ public class NormalUserDashboardController implements updateUserInformation{
     @FXML
     private Label retrievedPost;
     
-    // Retrieve TOP N Liked Posts
+    /* Retrieve TOP N Liked Posts */
     @FXML
     private Button TopNLikedPosts;
     @FXML
@@ -388,7 +389,7 @@ public class NormalUserDashboardController implements updateUserInformation{
     @FXML
     private Label retrievedTopNPostsMessage; // Used to write the message to the user for the top N shared and liked posts
 
-    // Retrieve TOP N Shared Posts
+    /* Retrieve TOP N Shared Posts parameters*/
     @FXML
     private Button TopNSharedPosts;
     @FXML
@@ -404,7 +405,7 @@ public class NormalUserDashboardController implements updateUserInformation{
 
     
     
-    // initialised logged on user variable, will be updated with the logged username
+    /* initialised logged on user variable, will be updated with the logged username */
 	public String loggedUser;
 	
 	public void setUser(String username) {
@@ -412,7 +413,7 @@ public class NormalUserDashboardController implements updateUserInformation{
 		loggedUser = username;
 		}
 
-    // Open the VIP user registration/opt in window if the users click on VIP button
+    /* Open the VIP user registration/opt in window if the users click on VIP button */
     @FXML
     private void onVIPOptIn() throws IOException {   
     	FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/VIPOptIn.fxml"));
@@ -432,217 +433,218 @@ public class NormalUserDashboardController implements updateUserInformation{
     }
 	@FXML
 	private void onVIPSubscribe() throws IOException {
-		//CONFIRMATION
+		/* Ask the user for CONFIRMATION */
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("VIP Subscription Confirmation!");
 		Optional<ButtonType> alertResult = alert.showAndWait();
-		// Throw an error if the user does not confirm or cancel the subscription
+		/* Throw an error if the user does not confirm or cancel the subscription */
 		if (alertResult.isEmpty()) {
 			vipSubscriberMessage.setText("Please make a choice of OK or CANCEL");
 			vipSubscriberMessage.setStyle(errorMessage);
-		// Update the user's record to be VIP and instruct the user to logout/login if subscription is confirmed
+		/* Update the user's record to be VIP and instruct the user to logout/login if subscription is confirmed */
 		} else if (alertResult.get() == ButtonType.OK) {
 			
 			updateUserInformation.vipOptIn(loggedUser);
 			vipSubscriberMessage.setText("Please log out and log in again to access VIP functionalities.");
 			vipSubscriberMessage.setStyle(successMessage);
 			
-		// Abort the subscription if the user choose not to proceed			
+		/* Abort the subscription if the user choose not to proceed */			
 		} else if(alertResult.get() == ButtonType.CANCEL) {
 			vipSubscriberMessage.setText("No worries, the VIP subscription is aborted!, please close this widonw!");
 			vipSubscriberMessage.setStyle(successMessage);
 			}
 
 	}
-            
-	  @FXML
-	     void onUpdateUserInfo() throws IOException {   
-	    	FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/UpdateUserInfo.fxml"));
-	    	loader2.setController(this);
-	        root = loader2.load();
-	        
-			Stage stage = new Stage();
+	/* Below methods will open new windows based on the users choice or button clicked */
 
-	        scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();     
+    @FXML
+     void onUpdateUserInfo() throws IOException {   
+    	FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/UpdateUserInfo.fxml"));
+    	loader2.setController(this);
+        root = loader2.load();
+        
+		Stage stage = new Stage();
 
-	        
-	    	}
-	    	@FXML 
-	    	 void onUpdateSubmit( ) throws IOException {
-	    	    if (!updateUserName.getText().isBlank()) { 
-	    	    	System.out.println(loggedUser);
-	    	    	updateUserInformation.updateUserName(loggedUser, updateUserName.getText().toString());
-	    	    	invalidUpdateInfo.setText("Username has been updated successfully");
-	    	    	invalidUpdateInfo.setStyle(successMessage);	 	    	
-	    	    }
-	    	    
-	    	    else if (!updateFirstName.getText().isBlank()) {  	    	   	
-		    	updateUserInformation.updateFirstName(loggedUser, updateFirstName.getText().toString());
-		    	invalidUpdateInfo.setText("First Name has been updated successfully");
-		    	invalidUpdateInfo.setStyle(successMessage);	    		    	
-	    	    }    
-	    	    
-	    	    else if (!updateLastName.getText().isBlank()) {  	    	   	
-		    	updateUserInformation.updateLastName(loggedUser, updateLastName.getText().toString());
-		    	invalidUpdateInfo.setText("Last Name has been updated successfully");
-		    	invalidUpdateInfo.setStyle(successMessage);	    	
-	    	    }     
-	   	    
-	    	    
-	    	    else if (!updatePassword.getText().isBlank()) {  	    	   	
-		    	updateUserInformation.updatePassword(loggedUser, updatePassword.getText().toString());
-		    	invalidUpdateInfo.setText("Password has been updated successfully");
-		    	invalidUpdateInfo.setStyle(successMessage);
-	    	    }
-	    	    
-	    	    else {
-	    	    	invalidUpdateInfo.setText("Only one record is allowed to be updated at a time");
-	    	    	invalidUpdateInfo.setStyle(errorMessage);
-	    	    }		
-		    } 
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();     
 
+        
+    	}
+    	@FXML 
+    	/* Only one parameter update is allowed at a time, e.g only username or password */
+    	 void onUpdateSubmit( ) throws IOException {
+    	    if (!updateUserName.getText().isBlank()) { 
+    	    	System.out.println(loggedUser);
+    	    	updateUserInformation.updateUserName(loggedUser, updateUserName.getText().toString());
+    	    	invalidUpdateInfo.setText("Username has been updated successfully");
+    	    	invalidUpdateInfo.setStyle(successMessage);	 	    	
+    	    }
+    	    
+    	    else if (!updateFirstName.getText().isBlank()) {  	    	   	
+	    	updateUserInformation.updateFirstName(loggedUser, updateFirstName.getText().toString());
+	    	invalidUpdateInfo.setText("First Name has been updated successfully");
+	    	invalidUpdateInfo.setStyle(successMessage);	    		    	
+    	    }    
+    	    
+    	    else if (!updateLastName.getText().isBlank()) {  	    	   	
+	    	updateUserInformation.updateLastName(loggedUser, updateLastName.getText().toString());
+	    	invalidUpdateInfo.setText("Last Name has been updated successfully");
+	    	invalidUpdateInfo.setStyle(successMessage);	    	
+    	    }   	    
+    	    
+    	    else if (!updatePassword.getText().isBlank()) {  	    	   	
+	    	updateUserInformation.updatePassword(loggedUser, updatePassword.getText().toString());
+	    	invalidUpdateInfo.setText("Password has been updated successfully");
+	    	invalidUpdateInfo.setStyle(successMessage);
+    	    }
+    	    
+    	    else {
+    	    	invalidUpdateInfo.setText("Only one record is allowed to be updated at a time");
+    	    	invalidUpdateInfo.setStyle(errorMessage);
+    	    }		
+	    } 
+
+    	
+    	@FXML 
+    	void onAddPost() throws IOException { 
+
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/AddPost.fxml"));
+       
+    	loader2.setController(this);
+        root = loader2.load();
+        
+		Stage stage = new Stage();
+
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();     
+      
+    	} 
+    	
+	    	@FXML
+	    	void onAddPostSubmit() throws NumberFormatException, Exception {
+	        	smHandler.addPost(Integer.parseInt(postID.getText()), postContent.getText().toString(), loggedUser, 
+	        			Integer.parseInt(postLikes.getText()), Integer.parseInt(postShares.getText()), postDate.getValue().atStartOfDay() );
+	        	invalidPostInput.setText("The post has been added successfully");
+	        	invalidPostInput.setStyle(successMessage);
+	    	    }        	
+	
 	    	
-	    	@FXML 
-	    	void onAddPost() throws IOException { 
+	
+	@FXML
+	public void onRemovePost() throws IOException {    
 
-	        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/AddPost.fxml"));
-	       
-	    	loader2.setController(this);
-	        root = loader2.load();
-	        
-			Stage stage = new Stage();
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RemovePost.fxml"));
+    	loader2.setController(this);
+        root = loader2.load();
+        
+		Stage stage = new Stage();
 
-	        scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();     
-	      
-	    	} 
-	    	
-		    	@FXML
-		    	void onAddPostSubmit() throws NumberFormatException, Exception {
-		        	smHandler.addPost(Integer.parseInt(postID.getText()), postContent.getText().toString(), loggedUser, 
-		        			Integer.parseInt(postLikes.getText()), Integer.parseInt(postShares.getText()), postDate.getValue().atStartOfDay() );
-		        	invalidPostInput.setText("The post has been added successfully");
-		        	invalidPostInput.setStyle(successMessage);
-		    	    }        	
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();           
+    	} 
+    	
+	    	@FXML
+	    	public void onRemovePostSubmit() throws NumberFormatException, Exception {
+	        	smHandler.removePost(Integer.parseInt(removePostID.getText()) );
+	        	invalidPostID.setText("The post has been removed successfully");
+	        	invalidPostID.setStyle(successMessage);
+	    	    }        	
+	
+    
+	@FXML
+	public void onRetrievePost() throws IOException {    
+
+		FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RetrievePost.fxml"));
+    	loader2.setController(this);
+        root = loader2.load();
+        
+		Stage stage = new Stage();
+
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();           
+	  } 
 		
-		    	
-		
-		@FXML
-		public void onRemovePost() throws IOException {    
-
-	        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RemovePost.fxml"));
-	    	loader2.setController(this);
-	        root = loader2.load();
-	        
-			Stage stage = new Stage();
-
-	        scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();           
-	    	} 
-	    	
-		    	@FXML
-		    	public void onRemovePostSubmit() throws NumberFormatException, Exception {
-//		        	SocialMediaPostsHandler smHandler  = new SocialMediaPostsHandler();
-		        	smHandler.removePost(Integer.parseInt(removePostID.getText()) );
-		        	invalidPostID.setText("The post has been removed successfully");
-		        	invalidPostID.setStyle(successMessage);
-		    	    }        	
-		
-	    
-		@FXML
-		public void onRetrievePost() throws IOException {    
-
-			FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RetrievePost.fxml"));
-	    	loader2.setController(this);
-	        root = loader2.load();
-	        
-			Stage stage = new Stage();
-
-	        scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();           
-		  } 
-		    	
-			@FXML 
-			public void onRetrievePostSubmit() throws NumberFormatException, Exception {
-//				SocialMediaPostsHandler smHandler  = new SocialMediaPostsHandler();
-				String returnedPost = smHandler.retrievePost(Integer.parseInt(retrievePostID.getText()) );
-		        	
-				if(returnedPost != "") {
-					invalidPostID.setText("Please find the below retrieved post");
-					invalidPostID.setStyle(successMessage);
-					retrievedPost.setText(returnedPost);
-		        	}
-				else {
-						invalidPostID.setText("There is no post found matching the provided ID!");
-			       		invalidPostID.setStyle(errorMessage);
-			       		retrievedPost.setText("");		        		
-				}
-			}   
-		@FXML
-		public void onTopNLikedPosts() throws IOException {
-			FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RetrieveTopNLikedPosts.fxml"));
-	    	loader2.setController(this);
-	        root = loader2.load();
-	        
-			Stage stage = new Stage();
-
-	        scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();       
-			} 
-		    	
-			@FXML
-			public void onRetrieveTopNLikedSubmit() throws NumberFormatException, Exception {
-			
-//				SocialMediaPostsHandler smHandler  = new SocialMediaPostsHandler();
-				
-				HashMap<String, Integer> returnedPosts = smHandler.retrieveTopNLikedPosts(Integer.parseInt(retrieveTopNLikedPosts.getText()) );
-
-		        ObservableList<TopNPosts> topnObservList = retrievedTopNLikedTable.getItems();
-
-				for (Map.Entry<String, Integer> set : returnedPosts.entrySet()) {
-					TopNPosts topn = new TopNPosts(set.getKey(), set.getValue());
-					topn.setPostContent(set.getKey());
-					topn.setNumberOfInteractions(set.getValue());
-			        topnObservList.add(topn);				
-				}
-				retrievedLikedPostContent.setCellValueFactory(new PropertyValueFactory<TopNPosts, String>("postContent"));
-				retrievedPostLikes.setCellValueFactory(new PropertyValueFactory<TopNPosts, Integer>("numberOfInteractions"));			
-				retrievedTopNLikedTable.setItems(topnObservList);
-				}
-			
+		/* Return the post corresponding to the entered post ID, if found */	    	
 		@FXML 
-		public void onTopNSharedPosts() throws IOException {
-			FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RetrieveTopNSharedPosts.fxml"));
-	    	loader2.setController(this);
-	        root = loader2.load();
-	        
-			Stage stage = new Stage();
+		public void onRetrievePostSubmit() throws NumberFormatException, Exception {
+			String returnedPost = smHandler.retrievePost(Integer.parseInt(retrievePostID.getText()) );
+	        	
+			if(returnedPost != "") {
+				invalidPostID.setText("Please find the below retrieved post");
+				invalidPostID.setStyle(successMessage);
+				retrievedPost.setText(returnedPost);
+	        	}
+			else {
+					invalidPostID.setText("There is no post found matching the provided ID!");
+		       		invalidPostID.setStyle(errorMessage);
+		       		retrievedPost.setText("");		        		
+			}
+		}   
+		
+	/* Return the Top N posts, if the N is larger than the total posts, return all posts */	    	
+	@FXML
+	public void onTopNLikedPosts() throws IOException {
+		FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RetrieveTopNLikedPosts.fxml"));
+    	loader2.setController(this);
+        root = loader2.load();
+        
+		Stage stage = new Stage();
 
-	        scene = new Scene(root);
-	        stage.setScene(scene);
-	        stage.show();        
-			} 
-			    	
-			@FXML 
-			public void onRetrieveTopNSharedSubmit() throws NumberFormatException, Exception {
-				HashMap<String, Integer> returnedTopNSharedPosts = smHandler.retrieveTopNSharedPosts(Integer.parseInt(retrieveTopNSharedPosts.getText()) );	
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();       
+		} 
+	    	
+		@FXML
+		public void onRetrieveTopNLikedSubmit() throws NumberFormatException, Exception {
+			HashMap<String, Integer> returnedPosts = smHandler.retrieveTopNLikedPosts(Integer.parseInt(retrieveTopNLikedPosts.getText()) );
 
-			    ObservableList<TopNPosts> topnObservList = retrievedTopNSharedTable.getItems();
+	        ObservableList<TopNPosts> topnObservList = retrievedTopNLikedTable.getItems();
 
-				for (Map.Entry<String, Integer> set : returnedTopNSharedPosts.entrySet()) {
-					TopNPosts topn = new TopNPosts(set.getKey(), set.getValue());
-					topn.setPostContent(set.getKey());
-					topn.setNumberOfInteractions(set.getValue());
-			        topnObservList.add(topn);				
-				}
-				retrievedSharedPostContent.setCellValueFactory(new PropertyValueFactory<TopNPosts, String>("postContent"));
-				retrievedPostShares.setCellValueFactory(new PropertyValueFactory<TopNPosts, Integer>("numberOfInteractions"));			
-				retrievedTopNSharedTable.setItems(topnObservList);
-				}	
-	   }
+			for (Map.Entry<String, Integer> set : returnedPosts.entrySet()) {
+				TopNPosts topn = new TopNPosts(set.getKey(), set.getValue());
+				topn.setPostContent(set.getKey());
+				topn.setNumberOfInteractions(set.getValue());
+		        topnObservList.add(topn);				
+			}
+			retrievedLikedPostContent.setCellValueFactory(new PropertyValueFactory<TopNPosts, String>("postContent"));
+			retrievedPostLikes.setCellValueFactory(new PropertyValueFactory<TopNPosts, Integer>("numberOfInteractions"));			
+			retrievedTopNLikedTable.setItems(topnObservList);
+			}
+		
+	/* Return the Top N posts, if the N is larger than the total posts, return all posts */  	
+		
+	@FXML 
+	public void onTopNSharedPosts() throws IOException {
+		FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RetrieveTopNSharedPosts.fxml"));
+    	loader2.setController(this);
+        root = loader2.load();
+        
+		Stage stage = new Stage();
+
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();        
+		} 
+		    	
+		@FXML 
+		public void onRetrieveTopNSharedSubmit() throws NumberFormatException, Exception {
+			HashMap<String, Integer> returnedTopNSharedPosts = smHandler.retrieveTopNSharedPosts(Integer.parseInt(retrieveTopNSharedPosts.getText()) );	
+
+		    ObservableList<TopNPosts> topnObservList = retrievedTopNSharedTable.getItems();
+
+			for (Map.Entry<String, Integer> set : returnedTopNSharedPosts.entrySet()) {
+				TopNPosts topn = new TopNPosts(set.getKey(), set.getValue());
+				topn.setPostContent(set.getKey());
+				topn.setNumberOfInteractions(set.getValue());
+		        topnObservList.add(topn);				
+			}
+			retrievedSharedPostContent.setCellValueFactory(new PropertyValueFactory<TopNPosts, String>("postContent"));
+			retrievedPostShares.setCellValueFactory(new PropertyValueFactory<TopNPosts, Integer>("numberOfInteractions"));			
+			retrievedTopNSharedTable.setItems(topnObservList);
+			}	
+   }

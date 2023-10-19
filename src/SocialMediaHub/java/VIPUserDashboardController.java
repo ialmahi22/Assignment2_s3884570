@@ -45,93 +45,15 @@ import javafx.stage.Stage;
 public class VIPUserDashboardController implements Initializable {
 	
 	SocialMediaPostsHandler smHandler = new SocialMediaPostsHandler();
-//    private final String user = new SimpleObjectProperty<>() ;
-
-//    public String userProperty() {
-//    	welcomUsername.setText(user);
-//        return user ;
-//    }
-//    
-//	public VIPUserDashboardController(String user) {
-//		super(user);
-//	}
-
-//
-//	public void setCommonDashboardController(CommonDashboardController commonDashboardController ) {
-//		this.commonDashboardController = commonDashboardController;
-//	}
-//	}
-	
-//    public void someMethod() {
-//        // Access the variable in the parent controller
-//
-//    }
     
-	// Declare FXML parameters
+	/* Declare the parameters/variables defined in the FXML files */
     @FXML
-    private Label welcomUsername;   
-    
+    private Label welcomUsername;       
 	@FXML
 	private PieChart postsSharesPieChart;
 	@FXML
 	private PieChart postsLikesPieChart;
-	
-	public String loggedUser;
-	public void setUser(String username) {
-		welcomUsername.setText(username);
-		loggedUser = username;
-		}
-
-      
-    // Create intialise to load the data before the window is populated
-    public void initialize(URL url, ResourceBundle resourceBundle) {       
-    	HashMap<String, Integer> returnedTopNLikedPosts;
-    	int twoDigitsValue = 0;
-    	int threeDigitsValue = 0;
-    	int fourDigitsValue = 0;    	
-		try {
-			returnedTopNLikedPosts = smHandler.retrieveTopNLikedPosts(100);
-	    	for (Map.Entry<String, Integer> set : returnedTopNLikedPosts.entrySet()) {
-	    		if (set.getValue() > 0 && set.getValue() < 100) {
-	    			twoDigitsValue = twoDigitsValue + 1;
-	    		} 
-	    		else if(set.getValue() >= 100 && set.getValue() < 1000) {
-	    			threeDigitsValue = threeDigitsValue + 1;
-	    		}
-	    		else {
-	    			fourDigitsValue = fourDigitsValue + 1;
-	    		}
-	    	}			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-
-    	ObservableList<PieChart.Data> postsPieChartData = FXCollections.observableArrayList(
-    					new PieChart.Data("Less than 100 likes", twoDigitsValue),
-    					new PieChart.Data("Less than 1000 likes", threeDigitsValue),
-    					new PieChart.Data("More than 1000 likes", fourDigitsValue));
-
-     	ObservableList<PieChart.Data> postsSharesPieChartData = FXCollections.observableArrayList(
-				new PieChart.Data("Less than 100 shares", twoDigitsValue),
-				new PieChart.Data("Less than 1000 shares", threeDigitsValue),
-				new PieChart.Data("More than 1000 shares", fourDigitsValue));
-    	
-//    	postsPieChartData.forEach(data ->
-//    			data.nameProperty().bind(
-//    					Bindings.concat(
-//    							data.getName(), "Number: ", data.pieValueProperty()
-//    							)
-//    					)
-//    			);
-    	postsSharesPieChart.getData().addAll(postsSharesPieChartData);
-    	postsLikesPieChart.getData().addAll(postsPieChartData);
-        }        
-    
-    
-
-    private Scene scene;
+	private Scene scene;
     private Parent root; 
 
     String successMessage = String.format("-fx-text-fill: GREEN;");
@@ -237,7 +159,84 @@ public class VIPUserDashboardController implements Initializable {
     public TableColumn<TopNPosts, Integer> retrievedPostShares = new TableColumn<TopNPosts, Integer>("numberOfInteractions");
     @FXML
     public TextField retrieveTopNSharedPosts;
-    
+    	
+	
+	/* Define the loggeduser and provide a setter to pass the successfully logged on username
+	 * the loggedUser will be used in various methods, for example to be used as the key to fetch and update the user's information
+    */
+	public String loggedUser;
+	public void setUser(String username) {
+		welcomUsername.setText(username);
+		loggedUser = username;
+		}
+
+	/* Initialise the VIP user's piechart data, initialiser loads the data when the window/dashboard is opened 
+	 * The data plotted in the piechart is categorised based on the number of likes/shares range:
+	 * - Likes/Shares from zero to 99
+	 * - Likes/Shares from 100 to 999
+	 * - Likes/Shares with more than 1000
+	 */
+      
+    public void initialize(URL url, ResourceBundle resourceBundle) {       
+    	HashMap<String, Integer> returnedTopNLikedPosts;
+    	HashMap<String, Integer> returnedTopNSharedPosts;
+
+    	int twoDigitLikedPosts = 0;
+    	int threeDigitLikedPosts = 0;
+    	int fourDigitLikedPosts = 0;   
+
+    	int twoDigitSharedPosts = 0;
+    	int threeDigitSharedPosts = 0;
+    	int fourDigitSharedPosts = 0; 
+    	
+		try {
+			returnedTopNLikedPosts = smHandler.retrieveTopNLikedPosts(1000);
+			returnedTopNSharedPosts = smHandler.retrieveTopNSharedPosts(1000);
+			
+	    	for (Map.Entry<String, Integer> set : returnedTopNLikedPosts.entrySet()) {
+	    		if (set.getValue() > 0 && set.getValue() < 100) {
+	    			twoDigitLikedPosts = twoDigitLikedPosts + 1;
+	    		} 
+	    		else if(set.getValue() >= 100 && set.getValue() < 1000) {
+	    			threeDigitLikedPosts = threeDigitLikedPosts + 1;
+	    		}
+	    		else {
+	    			fourDigitLikedPosts = fourDigitLikedPosts + 1;
+	    		}
+	    	}
+	    	for (Map.Entry<String, Integer> set : returnedTopNSharedPosts.entrySet()) {
+	    		if (set.getValue() > 0 && set.getValue() < 100) {
+	    			twoDigitSharedPosts = twoDigitSharedPosts + 1;
+	    		} 
+	    		else if(set.getValue() >= 100 && set.getValue() < 1000) {
+	    			threeDigitSharedPosts = threeDigitSharedPosts + 1;
+	    		}
+	    		else {
+	    			fourDigitSharedPosts = fourDigitSharedPosts + 1;
+	    		}
+	    	}	    	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}    	
+
+		/* Create observalelist to store the data to be graphed by PieChart */
+
+    	ObservableList<PieChart.Data> postsLikessPieChartData = FXCollections.observableArrayList(
+    					new PieChart.Data("Less than 100 likes", twoDigitLikedPosts),
+    					new PieChart.Data("Less than 1000 likes", twoDigitLikedPosts),
+    					new PieChart.Data("More than 1000 likes", twoDigitLikedPosts));
+
+     	ObservableList<PieChart.Data> postsSharesPieChartData = FXCollections.observableArrayList(
+				new PieChart.Data("Less than 100 shares", twoDigitSharedPosts),
+				new PieChart.Data("Less than 1000 shares", threeDigitSharedPosts),
+				new PieChart.Data("More than 1000 shares", fourDigitSharedPosts));
+    	
+		/* Add the data to the piechart graphs */
+    	postsLikesPieChart.getData().addAll(postsLikessPieChartData);
+    	postsSharesPieChart.getData().addAll(postsSharesPieChartData);
+        }        
+            
+	/* Below methods will open new windows based on the users choice or button clicked */
 
     @FXML
      void onUpdateUserInfo() throws IOException {   
@@ -254,6 +253,7 @@ public class VIPUserDashboardController implements Initializable {
         
     	}
     	@FXML 
+    	/* Only one parameter update is allowed at a time, e.g only username or password */
     	 void onUpdateSubmit( ) throws IOException {
     	    if (!updateUserName.getText().isBlank()) { 
     	    	System.out.println(loggedUser);
@@ -272,8 +272,7 @@ public class VIPUserDashboardController implements Initializable {
 	    	updateUserInformation.updateLastName(loggedUser, updateLastName.getText().toString());
 	    	invalidUpdateInfo.setText("Last Name has been updated successfully");
 	    	invalidUpdateInfo.setStyle(successMessage);	    	
-    	    }     
-   	    
+    	    }   	    
     	    
     	    else if (!updatePassword.getText().isBlank()) {  	    	   	
 	    	updateUserInformation.updatePassword(loggedUser, updatePassword.getText().toString());
@@ -330,7 +329,6 @@ public class VIPUserDashboardController implements Initializable {
     	
 	    	@FXML
 	    	public void onRemovePostSubmit() throws NumberFormatException, Exception {
-//	        	SocialMediaPostsHandler smHandler  = new SocialMediaPostsHandler();
 	        	smHandler.removePost(Integer.parseInt(removePostID.getText()) );
 	        	invalidPostID.setText("The post has been removed successfully");
 	        	invalidPostID.setStyle(successMessage);
@@ -350,10 +348,10 @@ public class VIPUserDashboardController implements Initializable {
         stage.setScene(scene);
         stage.show();           
 	  } 
-	    	
+		
+		/* Return the post corresponding to the entered post ID, if found */	    	
 		@FXML 
 		public void onRetrievePostSubmit() throws NumberFormatException, Exception {
-//			SocialMediaPostsHandler smHandler  = new SocialMediaPostsHandler();
 			String returnedPost = smHandler.retrievePost(Integer.parseInt(retrievePostID.getText()) );
 	        	
 			if(returnedPost != "") {
@@ -367,6 +365,8 @@ public class VIPUserDashboardController implements Initializable {
 		       		retrievedPost.setText("");		        		
 			}
 		}   
+		
+	/* Return the Top N posts, if the N is larger than the total posts, return all posts */	    	
 	@FXML
 	public void onTopNLikedPosts() throws IOException {
 		FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../resources/RetrieveTopNLikedPosts.fxml"));
@@ -382,9 +382,6 @@ public class VIPUserDashboardController implements Initializable {
 	    	
 		@FXML
 		public void onRetrieveTopNLikedSubmit() throws NumberFormatException, Exception {
-		
-//			SocialMediaPostsHandler smHandler  = new SocialMediaPostsHandler();
-			
 			HashMap<String, Integer> returnedPosts = smHandler.retrieveTopNLikedPosts(Integer.parseInt(retrieveTopNLikedPosts.getText()) );
 
 	        ObservableList<TopNPosts> topnObservList = retrievedTopNLikedTable.getItems();
@@ -399,6 +396,8 @@ public class VIPUserDashboardController implements Initializable {
 			retrievedPostLikes.setCellValueFactory(new PropertyValueFactory<TopNPosts, Integer>("numberOfInteractions"));			
 			retrievedTopNLikedTable.setItems(topnObservList);
 			}
+		
+	/* Return the Top N posts, if the N is larger than the total posts, return all posts */  	
 		
 	@FXML 
 	public void onTopNSharedPosts() throws IOException {
