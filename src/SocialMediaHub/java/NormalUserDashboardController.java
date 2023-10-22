@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import SocialMediaHub.java.SocialMediaPosts.SocialMediaPostsHandler;
+import SocialMediaHub.java.SocialMediaPosts.TopNPosts;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

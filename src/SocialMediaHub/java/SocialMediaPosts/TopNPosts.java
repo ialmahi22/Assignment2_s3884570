@@ -12,7 +12,7 @@
  * Copyright to RMIT, Oct 2023
  */
 
-package SocialMediaHub.java;
+package SocialMediaHub.java.SocialMediaPosts;
 
 public class TopNPosts {
 	public String postContent;

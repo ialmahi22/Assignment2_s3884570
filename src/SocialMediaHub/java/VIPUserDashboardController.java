@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import SocialMediaHub.java.SocialMediaPosts.SocialMediaPostsHandler;
+import SocialMediaHub.java.SocialMediaPosts.TopNPosts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -220,7 +221,6 @@ public class VIPUserDashboardController implements Initializable {
 		}    	
 
 		/* Create observalelist to store the data to be graphed by PieChart */
-
     	ObservableList<PieChart.Data> postsLikessPieChartData = FXCollections.observableArrayList(
     					new PieChart.Data("Less than 100 likes", twoDigitLikedPosts),
     					new PieChart.Data("Less than 1000 likes", twoDigitLikedPosts),

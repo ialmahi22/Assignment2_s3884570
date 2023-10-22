@@ -75,24 +75,51 @@ public class SocialMediaPostsHandler implements postsFileProcessor {
 
 
 	public void addPost( Integer postID, String postContent, String  postAuthor, Integer postLikes, Integer postShares, LocalDateTime postDate ) throws Exception {
+		try {
+			postsFileProcessor.addPost(postID, postContent, postAuthor, postLikes, postShares, postDate );
+			System.out.println("The post has been added to the collection!");
+		}
 		
-		postsFileProcessor.addPost(postID, postContent, postAuthor, postLikes, postShares, postDate );
+		catch (InputMismatchException exc) {
+			System.out.println("Invalid input format, please ensure you provide compatible post input data");
+			throw exc;
+		}
+		
 
 	  }	
 
-	public void removePost( Integer postID ) throws Exception {		
-		postsFileProcessor.removePost(postID );
+	public void removePost( Integer postID ) {	
+		try {
+			postsFileProcessor.removePost(postID );
+			System.out.println("The post has been removed from the collection!");
+			
+		}
+		catch (InputMismatchException exc) {
+			System.out.println("Invalid input post ID, please ensure you provide valid post ID!");
+			throw exc;
+		}
 	  }
 
-	public String retrievePost( Integer postID ) throws Exception {		
-		
-		String returnedPost = postsFileProcessor.retrievePost(postID );
-		return returnedPost;
+	public String retrievePost( Integer postID ) {		
+		try {
+			String returnedPost = postsFileProcessor.retrievePost(postID );
+			
+			if(returnedPost == "" || returnedPost == null) {
+				throw new InputMismatchException("Invalid input post ID, please ensure you provide valid post ID!");
+			}
+			return returnedPost;
+
+		}
+		catch (InputMismatchException exc) {
+			System.out.println("Invalid input post ID, please ensure you provide valid post ID!");
+			throw exc;
+		}
 	  }
 			
 	
-	// Below code used to get the top N liked posts, it utilises code from the returnPostsCollection section 
+	/* Below code used to get the top N liked posts, it utilises code from the returnPostsCollection section 
 	// of the interface postsFileProcessor
+	 * */
 	public HashMap<String, Integer> retrieveTopNLikedPosts( Integer numberOfPosts ) throws Exception {		
 		
 		ArrayList<String> postsCollection = postsFileProcessor.returnPostsCollection( );
@@ -101,8 +128,9 @@ public class SocialMediaPostsHandler implements postsFileProcessor {
 		return returnedTopLikedPosts;
 	  }	
 
-	// Below code used to get the top N liked posts, it utilises code from the returnPostsCollection section 
-	// of the interface postsFileProcessor
+	/* Below code used to get the top N liked posts, it utilises code from the returnPostsCollection section 
+	* of the interface postsFileProcessor
+	* */
 	public HashMap<String, Integer> retrieveTopNSharedPosts( Integer numberOfPosts ) throws Exception {		
 		
 		ArrayList<String> postsCollection = postsFileProcessor.returnPostsCollection( );
@@ -111,6 +139,8 @@ public class SocialMediaPostsHandler implements postsFileProcessor {
 		return returnedTopSharedPosts;
 	  }	
 	}	
+
+/* Interface to process social media actions and return outcome */
 interface postsFileProcessor {
 	static String filename = ("src/SocialMediaHub/files/posts.csv");
     
@@ -122,8 +152,8 @@ interface postsFileProcessor {
     	
     	try {
     		FileWriter fileWrite = new FileWriter(csvFile, true);
-    		fileWrite.append(postID + " ," + postContent + ", " + postAuthor + ", " + postLikes + ", " + 
-    				postShares + ", " + formattedPostDate + "\n");	
+    		fileWrite.append(postID + "," + postContent + "," + postAuthor + "," + postLikes + "," + postShares + "," + formattedPostDate + "\n");
+    					
 
     		fileWrite.close();
     		
@@ -181,7 +211,7 @@ interface postsFileProcessor {
     	}
     	catch (Exception e) 
     	{
-    		System.out.println("Error in removing the post");
+    		System.out.println("Invalid input post ID, please ensure you provide valid post ID!");
     	}
     }
 

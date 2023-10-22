@@ -70,6 +70,7 @@ public class RegistrationLoginController {
     @FXML
     private TextField RegisterationConfirmPasswordField;
     
+    /* method to perform the tasks of registration and login verification */
     public static boolean[] verifyRegisterandLogin(String user, String password, String file, String type) throws FileNotFoundException
     {
     	boolean verifyLoginOutcome = false;
