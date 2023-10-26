@@ -22,6 +22,8 @@ This project aims to build Java code to provide GUI applications for the end use
 - Exceptions handling to provide meaningful messages in case users provide illegal input to the Data Analytics Hub
 
 The project code is built taking into consideration the Object-oriented programming principles of abstraction and encapsulation, by which the main classes are hidden from the end users and the data manipulation is only done via the code built for this purpose.
+
+The design follows the MVC design pattern.
 #### The main code Components and directory structure
 ##### `src\SocialMediaHub.java`:
 #####`Main.java`:
@@ -79,4 +81,3 @@ The project code is built taking into consideration the Object-oriented programm
 #### References
 * (No date) GitHub. Available at: https://github.com/javacodingcommunity/JavaFxLogInForm/blob/main/loginForm/src/sample/LogIn.java (Accessed: 20 October 2023). 
 * Gleidsonmt (no date) GLEIDSONMT/DashboardFx: Javafx dashboard, GitHub. Available at: https://github.com/gleidsonmt/DashboardFx (Accessed: 20 October 2023). 
-# Assignment2_s3884570
